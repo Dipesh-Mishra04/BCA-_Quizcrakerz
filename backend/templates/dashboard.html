@@ -1,138 +1,103 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <style>
-        /* Classy Gradient Background */
-        body {
-            font-family: 'Arial', sans-serif;
-            background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
-            color: #fff;
-            margin: 0;
-            padding: 0;
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Dashboard</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {
+      background: linear-gradient(135deg, #a480ca 0%, #99d1ca 100%);
+      color: #fff;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      font-family: 'Segoe UI', sans-serif;
+    }
 
-        .container {
-            margin-top: 10%;
-        }
+    .dashboard-card {
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      backdrop-filter: blur(10px);
+      padding: 40px;
+      border-radius: 15px;
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+    }
 
-        h1 {
-            color: #fff;
-            font-size: 3em;
-            margin-bottom: 20px;
-            font-weight: bold;
-        }
+    h1 {
+      font-weight: 800;
+      color: #971a1a;
+      text-align: center;
+      font-weight: bolder;
+    }
 
-        .lead {
-            font-size: 1.2em;
-            color: #f0f0f0;
-            margin-bottom: 40px;
-        }
+    p.lead {
+      text-align: center;
+      font-size: 1.1rem;
+      color: #000000;
+      margin-bottom: 2rem;
+      font-weight: bolder;
+    }
 
-        .subject-btn {
-            width: 100%;
-            padding: 15px;
-            font-size: 1.1em;
-            text-transform: uppercase;
-            border-radius: 8px;
-            transition: background-color 0.3s ease, transform 0.2s ease-in-out;
-            border: 2px solid #ffffff;
-            background-color: rgba(255, 255, 255, 0.1);
-            color: #fff;
-        }
+    .subject-btn {
+      width: 100%;
+      padding: 15px;
+      font-size: 1rem;
+      font-weight: 600;
+      border: none;
+      border-radius: 10px;
+      background-color: #ffffff20;
+      color: #360bac;
+      transition: all 0.3s ease;
+      font-weight: bolder;
+    }
 
-        .subject-btn:hover {
-            background-color: rgba(255, 255, 255, 0.3);
-            transform: translateY(-5px);
-        }
+    .subject-btn:hover {
+      background-color: #cc272740;
+      transform: translateY(-4px);
+    }
 
-        .subject-btn:active {
-            transform: translateY(0);
-        }
+    .logout-btn {
+      display: block;
+      width: 200px;
+      margin: 30px auto 0;
+      padding: 12px;
+      font-weight: bolder;
+      border-radius: 10px;
+    }
 
-        .btn-primary {
-            background-color: #28a745;
-            border: none;
-        }
-
-        .btn-primary:hover {
-            background-color: #218838;
-        }
-
-        .row {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-        }
-
-        .col-md-4 {
-            margin-bottom: 20px;
-        }
-
-        .footer {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            text-align: center;
-            padding: 10px;
-            background-color: rgba(0, 0, 0, 0.7);
-            color: #fff;
-        }
-
-        @media (max-width: 768px) {
-            .col-md-4 {
-                flex: 0 0 100%;
-                max-width: 100%;
-            }
-        }
-    </style>
+    .footer {
+      margin-top: auto;
+      padding: 10px 0;
+      background-color: rgba(0, 0, 0, 0.2);
+      color: #fff;
+      text-align: center;
+      font-size: 0.9rem;
+      font-weight: bolder;
+    }
+  </style>
 </head>
 <body>
-    <div class="container">
-        <!-- Display welcome message for logged-in user -->
-        <h1 class="mt-5">Welcome to the BCA Mock Test, {{ session['user'] }}</h1>
-        <p>Select a subject to begin your quiz:</p>
-        
-        <!-- Subject Buttons: Each button links to the start_quiz route with the specific subject -->
-        <div class="row">
-            <div class="col-md-4">
-                <a href="{{ url_for('start_quiz', subject='Computer Networks') }}" class="btn btn-primary">Computer Networks</a>
-            </div>
-            <div class="col-md-4">
-                <a href="{{ url_for('start_quiz', subject='Data Structures') }}" class="btn btn-primary">Data Structures</a>
-            </div>
-            <div class="col-md-4">
-                <a href="{{ url_for('start_quiz', subject='Database Management Systems') }}" class="btn btn-primary">DBMS</a>
-            </div>
-            <div class="col-md-4">
-                <a href="{{ url_for('start_quiz', subject='Web Development') }}" class="btn btn-primary">Web Development</a>
-            </div>
-            <div class="col-md-4">
-                <a href="{{ url_for('start_quiz', subject='Programming Languages') }}" class="btn btn-primary">Programming Languages</a>
-            </div>
-            <div class="col-md-4">
-                <a href="{{ url_for('start_quiz', subject='Operating Systems') }}" class="btn btn-primary">Operating Systems</a>
-            </div>
-            <div class="col-md-4">
-                <a href="{{ url_for('start_quiz', subject='Software Engineering') }}" class="btn btn-primary">Software Engineering</a>
-            </div>
-            <div class="col-md-4">
-                <a href="{{ url_for('start_quiz', subject='Mathematics for Computing') }}" class="btn btn-primary">Mathematics for Computing</a>
-            </div>
-            <div class="col-md-4">
-                <a href="{{ url_for('start_quiz', subject='OOP') }}" class="btn btn-primary">Object-Oriented Programming</a>
-            </div>
-            <div class="col-md-4">
-                <a href="{{ url_for('start_quiz', subject='Computer Graphics') }}" class="btn btn-primary">Computer Graphics</a>
-            </div>
+  <div class="container d-flex flex-column justify-content-center align-items-center min-vh-100">
+    <div class="dashboard-card w-100" style="max-width: 900px;">
+      <h1>WELCOME {{ session['user'] }}</h1>
+      <p class="lead">Select a subject to begin your BCA mock test</p>
+      <div class="row g-3">
+        {% set subjects = ['Computer Networks', 'Data Structures', 'DBMS',
+                          'Web Development', 'Programming Languages', 'Operating Systems',
+                          'Software Engineering', 'Mathematics for Computing', 'OOP',
+                          'Computer Graphics'] %}
+        {% for subject in subjects %}
+        <div class="col-md-6 col-lg-4">
+          <a href="{{ url_for('start_quiz', subject=subject) }}" class="btn subject-btn">{{ subject }}</a>
         </div>
-
-        <!-- Logout Button -->
-        <a href="{{ url_for('logout') }}" class="btn btn-danger mt-3">Logout</a>
+        {% endfor %}
+      </div>
+      <a href="{{ url_for('logout') }}" class="btn btn-danger logout-btn">LOGOUT</a>
     </div>
+    <div class="footer mt-4">
+      &copy; 2025 QuizzCrakerz | All Rights Reserved
+    </div>
+  </div>
 </body>
 </html>

@@ -116,7 +116,7 @@ def subject_selection(subject_name):
     if request.method == 'POST':
         num_questions = int(request.form['num_questions'])
         time_limit = int(request.form['time_limit'])
-        return redirect(url_for('take_test', subject=subject_name, num_questions=num_questions, time_limit=time_limit))
+        return redirect(url_for('start_quiz', subject=subject_name, num_questions=num_questions, time_limit=time_limit))
     return render_template('subject_selection.html', subject_name=subject_name)
 
 # Route to start the quiz for a subject
