@@ -5,11 +5,7 @@ services:
     buildCommand: "pip install -r backend/requirements.txt"
     startCommand: "python backend/app.py"
     envVars:
-      - key: MYSQL_HOST
+      - key: OPENAI_API_KEY
         sync: false
-      - key: MYSQL_USER
-        sync: false
-      - key: MYSQL_PASSWORD
-        sync: false
-      - key: MYSQL_DB
+      - key: MONGO_URI
         sync: false
