@@ -2,8 +2,14 @@ services:
   - type: web
     name: quizzcrakerz
     env: python
-    buildCommand: "pip install -r requirements.txt"
-    startCommand: "python app.py"
+    buildCommand: "pip install -r backend/requirements.txt"
+    startCommand: "python backend/app.py"
     envVars:
-      - key: OPENAI_API_KEY
+      - key: MYSQL_HOST
+        sync: false
+      - key: MYSQL_USER
+        sync: false
+      - key: MYSQL_PASSWORD
+        sync: false
+      - key: MYSQL_DB
         sync: false
