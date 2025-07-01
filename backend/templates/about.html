@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>About Us - Online Quiz Website</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="{{ url_for('static', filename='styling.css') }}">
+</head>
+<body>
+  <nav class="navbar d-flex align-items-center" style="background: linear-gradient(135deg, #d1c0e9 0%, #b7c9f5 100%); padding: 1rem 2rem; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+    <div class="navbar-brand" style="font-weight: 700; font-size: 1.5rem; color: #2d2db6; letter-spacing: 2px;">Online Quiz Website</div>
+    <div class="ms-auto d-flex">
+      <a href="{{ url_for('frontpage') }}" class="nav-link" style="color: #171717; font-weight: 600; margin-right: 1rem; cursor: pointer; transition: color 0.3s ease;">Home</a>
+      <a href="{{ url_for('features') }}" class="nav-link" style="color: #171717; font-weight: 600; margin-right: 1rem; cursor: pointer; transition: color 0.3s ease;">Features</a>
+      <a href="{{ url_for('about') }}" class="nav-link active" style="color: #3a3aeb; font-weight: 600; margin-right: 1rem; cursor: pointer; transition: color 0.3s ease;">About</a>
+      <a href="{{ url_for('service') }}" class="nav-link" style="color: #171717; font-weight: 600; margin-right: 1rem; cursor: pointer; transition: color 0.3s ease;">Service</a>
+      <a href="{{ url_for('contact') }}" class="nav-link" style="color: #171717; font-weight: 600; margin-right: 1rem; cursor: pointer; transition: color 0.3s ease;">Contact</a>
+      <a href="{{ url_for('our_teams') }}" class="nav-link" style="color: #171717; font-weight: 600; margin-right: 1rem; cursor: pointer; transition: color 0.3s ease;">Our Team</a>
+    </div>
+  </nav>
+
+  <section class="container my-5 p-5 rounded-4" style="background: #e6e0f8; box-shadow: 0 10px 30px rgba(0,0,0,0.1); max-width: 800px; margin-left: auto; margin-right: auto;">
+    <h1 class="mb-4 text-center" style="color: #120c4b; font-weight: 900;">About QuizzCrakerz</h1>
+    <p style="color: #252154e8; font-size: 1.2rem; text-align: justify;">QuizzCrakerz was founded with the mission to revolutionize the way people learn and assess their knowledge. Our platform combines technology and education to create an engaging and effective learning environment.</p>
+    <p style="color: #252154e8; font-size: 1.2rem; text-align: justify;">Our team consists of passionate educators, developers, and designers dedicated to providing a seamless and enjoyable experience for learners of all ages.</p>
+    <h2 style="color: #120c4b; font-weight: 700; margin-top: 2rem;">Our Vision</h2>
+    <p style="color: #252154e8; font-size: 1.2rem; text-align: justify;">To empower learners worldwide by providing accessible, interactive, and high-quality educational tools.</p>
+    <h2 style="color: #120c4b; font-weight: 700; margin-top: 2rem;">Our Values</h2>
+    <ul style="color: #252154e8; font-size: 1.1rem; list-style-type: disc; padding-left: 1.5rem;">
+      <li><strong>Innovation:</strong> Continuously improving and integrating the latest technologies.</li>
+      <li><strong>Accessibility:</strong> Making education available to everyone, everywhere.</li>
+      <li><strong>Quality:</strong> Delivering reliable and accurate content.</li>
+      <li><strong>Community:</strong> Building a supportive and collaborative learning environment.</li>
+    </ul>
+  </section>
+
+  <style>
+    body {
+      background: linear-gradient(135deg, #d2b6f0 0%, #99b7eb 100%);
+      color: #222;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    .container {
+      background: white;
+      border-radius: 15px;
+      padding: 2rem;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+      margin-top: 2rem;
+      margin-bottom: 2rem;
+      transition: box-shadow 0.3s ease;
+    }
+    .container:hover {
+      box-shadow: 0 12px 45px rgba(59, 3, 150, 0.6);
+    }
+    h1, h2 {
+      color: #120c4b;
+      font-weight: 700;
+    }
+    ul {
+      padding-left: 1.2rem;
+    }
+    ul li {
+      margin-bottom: 0.5rem;
+      color: #252154e8;
+      font-size: 1.1rem;
+    }
+    /* Footer style like features.html */
+    footer {
+      background: linear-gradient(135deg, #d1c0e9 0%, #b7c9f5 100%);
+      padding: 2rem 0;
+      text-align: center;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      margin-top: 2rem;
+    }
+  </style>
+
+  <footer style="padding: 0.75rem 0;">
+    <p style="margin: 0; font-weight: 600; color: #2d2db6; font-size: 1.2rem;">&copy; 2024 QuizzCrakerz. All rights reserved.</p>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

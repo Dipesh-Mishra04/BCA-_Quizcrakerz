@@ -21,18 +21,18 @@ questions_collection = db['questions']
 
 # Fetching questions using Open Trivia DB API
 def fetch_questions(subject):
-    # Example category codes for Open Trivia DB:
+    # Updated category codes for Open Trivia DB for better subject specificity
     categories = {
-        'Computer Networks': 18,
-        'Data Structures': 18,
-        'Database Management Systems': 18,
-        'Web Development': 18,
-        'Programming Languages': 18,
-        'Operating Systems': 18,
-        'Software Engineering': 18,
-        'Mathematics for Computing': 19,
-        'OOP': 18,
-        'Computer Graphics': 18
+        'Computer Networks': 17,  # Science & Nature (closest)
+        'Data Structures': 18,    # Computers
+        'Database Management Systems': 18,  # Computers
+        'Web Development': 18,    # Computers
+        'Programming Languages': 18,  # Computers
+        'Operating Systems': 18,  # Computers
+        'Software Engineering': 18,  # Computers
+        'Mathematics for Computing': 19,  # Mathematics
+        'OOP': 18,                # Computers
+        'Computer Graphics': 18   # Computers
     }
     category_id = categories.get(subject, 18)
 
@@ -58,8 +58,36 @@ def fetch_questions(subject):
 def is_logged_in():
     return 'user_id' in session
 
+# Route for Frontpage
+@app.route('/')
+def frontpage():
+    return render_template('frontpage.html')
+
+@app.route('/features')
+def features():
+    return render_template('features.html')
+
+@app.route('/about')
+def about():
+    return render_template('about.html')
+
+@app.route('/contact', methods=['GET', 'POST'])
+def contact():
+    if request.method == 'POST':
+        # Here you can handle form submission, e.g., save contact info or send email
+        name = request.form.get('name')
+        email = request.form.get('email')
+        message = request.form.get('message')
+        # For now, just redirect back to contact page with a success message or handle as needed
+        return render_template('contact.html', success=True)
+    return render_template('contact.html')
+
+@app.route('/service')
+def service():
+    return render_template('service.html')
+
 # Route for Sign Up and Login Page
-@app.route('/', methods=['GET', 'POST'])
+@app.route('/login', methods=['GET', 'POST'])
 def index():
     if request.method == 'POST':
         action = request.form['action']  # Check if user is logging in or signing up
@@ -72,6 +100,7 @@ def index():
             if user and check_password_hash(user['password'], password):
                 # Store user session
                 session['user_id'] = str(user['_id'])  # Convert ObjectId to string
+                session['user'] = email  # Store email or username for display
                 return redirect(url_for('dashboard'))
             else:
                 # Redirect to the login page with an error
@@ -90,78 +119,82 @@ def index():
 
     return render_template('index.html')
 
-# Route to Dashboard
+
+# Route for Dashboard page
 @app.route('/dashboard')
 def dashboard():
     if not is_logged_in():
-        return redirect(url_for('index'))  # Redirect to login if not logged in
-    
-    subjects = list(subjects_collection.find())
+        return redirect(url_for('index'))
+    return render_template('dashboard.html')
 
-    # Convert ObjectId to string for all subjects
-    for subject in subjects:
-        subject['_id'] = str(subject['_id'])  # Convert ObjectId to string if needed
-    
-    return render_template('dashboard.html', subjects=subjects)
+# Route for Subject Selection page
+@app.route('/subject_selection')
+def subject_selection():
+    if not is_logged_in():
+        return redirect(url_for('index'))
+    return render_template('subject_selection.html')
 
-# Route to logout
+# Route for Quiz page
+@app.route('/quiz', methods=['GET', 'POST'])
+def quiz():
+    if not is_logged_in():
+        return redirect(url_for('index'))
+    if request.method == 'POST':
+        # Handle quiz submission here
+        submitted_answers = request.form.to_dict()
+        subject = submitted_answers.get('subject', 'Computer Networks')
+        questions = session.get('questions')
+
+        if not questions:
+            questions = fetch_questions(subject)
+
+        score = 0
+        total = len(questions)
+
+        # Calculate score by comparing submitted answers with correct answers
+        for i, question in enumerate(questions):
+            user_answer = submitted_answers.get(f'question_{i}')
+            if user_answer == question['correct']:
+                score += 1
+
+        # Store score and total in session to pass to result page
+        session['score'] = score
+        session['total'] = total
+        session['subject'] = subject
+
+        # Clear questions from session after scoring
+        session.pop('questions', None)
+
+        return redirect(url_for('result'))
+    # For GET request, fetch questions for a default or selected subject
+    subject = request.args.get('subject', 'Computer Networks')
+    session['subject'] = subject
+    questions = fetch_questions(subject)
+    session['questions'] = questions
+    time_limit = 2  # 2 minutes time limit for quiz
+    return render_template('quiz.html', questions=questions, subject=subject, time_limit=time_limit)
+
+# Route for Result page
+@app.route('/result')
+def result():
+    if not is_logged_in():
+        return redirect(url_for('index'))
+    score = session.get('score')
+    total = session.get('total')
+    if score is None or total is None:
+        return redirect(url_for('dashboard'))
+    return render_template('result.html', score=score, total=total)
+
+# Route for Our Teams page
+@app.route('/our_teams')
+def our_teams():
+    return render_template('our_teams.html')
+
 @app.route('/logout')
 def logout():
-    session.pop('user_id', None)
+    session.clear()
     return redirect(url_for('index'))
 
-# Route to Subject Selection (Number of Questions & Time Limit)
-@app.route('/subject_selection/<subject_name>', methods=['GET', 'POST'])
-def subject_selection(subject_name):
-    if request.method == 'POST':
-        num_questions = int(request.form['num_questions'])
-        time_limit = int(request.form['time_limit'])
-        return redirect(url_for('start_quiz', subject=subject_name, num_questions=num_questions, time_limit=time_limit))
-    return render_template('subject_selection.html', subject_name=subject_name)
-
-# Route to start the quiz for a subject
-@app.route('/start_quiz/<subject>')
-def start_quiz(subject):
-    if not is_logged_in():
-        return redirect(url_for('index'))  # Redirect to the login page if not logged in
-
-    # Get questions dynamically from API
-    questions = fetch_questions(subject)
-
-    if not questions:
-        return "Sorry, no questions available at the moment."
-
-    # Set time limit based on the subject
-    time_limit = 2 # Set time limit for the subject in minutes (can vary per subject)
-    session['time_limit'] = time_limit * 60
-    session['subject'] = subject
-    session['questions'] = questions
-
-    return render_template('quiz.html', subject=subject, questions=questions, time_limit=time_limit)
-
-# Route to submit the quiz results
-@app.route('/submit_quiz', methods=['POST'])
-def submit_quiz():
-    print(request.form)  # Debug submitted data
-    if 'user_id' not in session:
-        return redirect(url_for('index'))
-    
-    answers = request.form
-    correct_answers = 0
-    questions = session.get('questions', [])
-    
-    # Evaluate score
-     # Evaluate score
-    for idx, question in enumerate(questions, start=1):  # Use index to match form data
-        submitted_answer = answers.get(f"question_{question['question'].replace(' ', '_')}")
-        if submitted_answer == question['correct']:
-            correct_answers += 1
-    # Calculate rank
-    total_questions = len(questions)
-    rank = f"Your rank is {correct_answers}/{total_questions}"
-
-    # Render results
-    return render_template('result.html', score=correct_answers, total=total_questions, rank=rank)
-
-if __name__ == '__main__':
-    app.run(debug=True)
+if __name__ == "__main__":
+    from os import environ
+    app.run(host="0.0.0.0", port=int(environ.get("PORT", 5000)))

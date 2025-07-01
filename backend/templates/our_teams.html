@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Our Teams - Online Quiz Website</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <style>
+    body {
+      background: linear-gradient(135deg, #d2b6f0 0%, #99b7eb 100%);
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      color: #222;
+      margin: 0;
+      padding: 0;
+    }
+    .container {
+      max-width: 1200px;
+      margin: 3rem auto;
+      background: rgb(173, 192, 220);
+      border-radius: 15px;
+      padding: 2rem;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 2rem;
+    }
+    .team-member {
+      flex: 1 1 calc(50% - 2rem);
+      background:rgb(216, 225, 239);
+      border-radius: 15px;
+      padding: 1.5rem;
+      box-shadow: 0 4px 15px rgba(59, 3, 150, 0.2);
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      transition: box-shadow 0.3s ease;
+    }
+    .team-member:hover {
+      box-shadow: 0 8px 30px rgba(59, 3, 150, 0.4);
+    }
+    .team-member img {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 3px solid #3a3aeb;
+    }
+    .team-info {
+      flex-grow: 1;
+    }
+    .team-info h2 {
+      margin: 0 0 0.3rem 0;
+      color: #120c4b;
+      font-weight: 700;
+      font-size: 1.5rem;
+    }
+    .team-info h3 {
+      margin: 0 0 0.5rem 0;
+      color: #3a3aeb;
+      font-weight: 600;
+      font-size: 1.1rem;
+    }
+    .team-info p {
+      margin: 0 0 0.5rem 0;
+      color: #252154e8;
+      font-size: 1rem;
+    }
+    .team-info a {
+      color: #3a3aeb;
+      text-decoration: none;
+      margin-right: 1rem;
+      font-weight: 600;
+      transition: color 0.3s ease;
+    }
+    .team-info a:hover {
+      color: #120c4b;
+      text-decoration: underline;
+    }
+    @media (max-width: 768px) {
+      .container {
+        flex-direction: column;
+        max-width: 90%;
+      }
+      .team-member {
+        flex: 1 1 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <nav class="navbar d-flex align-items-center" style="background: linear-gradient(135deg, #d1c0e9 0%, #b7c9f5 100%); padding: 0.3rem 2rem; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+    <div class="navbar-brand" style="font-weight: 700; font-size: 1.5rem; color: #2d2db6; letter-spacing: 2px;">Online Quiz Website</div>
+    <div class="ms-auto d-flex">
+      <a href="{{ url_for('frontpage') }}" class="nav-link" style="color: #171717; font-weight: 600; margin-right: 1rem; cursor: pointer; transition: color 0.3s ease;">Home</a>
+      <a href="{{ url_for('features') }}" class="nav-link" style="color: #171717; font-weight: 600; margin-right: 1rem; cursor: pointer; transition: color 0.3s ease;">Features</a>
+      <a href="{{ url_for('about') }}" class="nav-link" style="color: #171717; font-weight: 600; margin-right: 1rem; cursor: pointer; transition: color 0.3s ease;">About</a>
+      <a href="{{ url_for('service') }}" class="nav-link" style="color: #171717; font-weight: 600; margin-right: 1rem; cursor: pointer; transition: color 0.3s ease;">Service</a>
+      <a href="{{ url_for('contact') }}" class="nav-link" style="color: #171717; font-weight: 600; margin-right: 1rem; cursor: pointer; transition: color 0.3s ease;">Contact</a>
+      <a href="{{ url_for('our_teams') }}" class="nav-link active" style="color: #3a3aeb; font-weight: 600; margin-right: 1rem; cursor: pointer; transition: color 0.3s ease;">Our Teams</a>
+    </div>
+  </nav>
+
+  <div style="text-align: center; margin-top: 0.3rem; margin-bottom: 1rem;">
+    <h1 style="font-weight: 700; font-size: 2.5rem; color: #120c4b;">OUR TEAM</h1>
+    <p style="max-width: 600px; margin: 0 auto; color: #000000e8; font-size: 1.1rem; line-height: 1.5;">
+      Our dedicated team of students is committed to delivering the best educational experience. With diverse expertise in UI development, design, and technology, we work collaboratively to innovate and inspire.
+    </p>
+  </div>
+
+  <div class="container">
+    <div class="team-member">
+      <img src="{{ url_for('static', filename='dipesh.jpg') }}" alt="Dipesh Mishra" />
+      <div class="team-info">
+        <h2>Dipesh Mishra</h2>
+        <h3>Full-Stack Developer</h3>
+        <p>Email: mishragdipesh@gmail.com</p>
+        <a href="https://github.com/holdencaulfield" target="_blank" rel="noopener noreferrer">GitHub Profile</a>
+      </div>
+    </div>
+    <div class="team-member">
+      <img src="{{ url_for('static', filename='ayush.jpg') }}" alt="Ayush Singh" />
+      <div class="team-info">
+        <h2>Ayush Singh</h2>
+        <h3>Front-end Developer</h3>
+        <p>Email: ayushsingh7788j@gmail.com</p>
+        <a href="https://github.com/alperkamu" target="_blank" rel="noopener noreferrer">GitHub Profile</a>
+      </div>
+    </div>
+    <div class="team-member">
+      <img src="{{ url_for('static', filename='arjun.jpg') }}" alt="Arjun Singh" />
+      <div class="team-info">
+        <h2>Arjun Singh</h2>
+        <h3>Front-end Developer</h3>
+        <p>Email: arjun1106singh@gmail.com</p>
+        <a href="https://github.com/atticusfinch" target="_blank" rel="noopener noreferrer">GitHub Profile</a>
+      </div>
+    </div>
+    <div class="team-member">
+      <img src="{{ url_for('static', filename='gaurav.jpg') }}" alt="Gaurav Singh Negi" />
+      <div class="team-info">
+        <h2>Gaurav Singh Negi</h2>
+        <h3>Tester</h3>
+        <p>Email: gauravnegi0525@gmail.com</p>
+        <a href="https://github.com/henryletham" target="_blank" rel="noopener noreferrer">GitHub Profile</a>
+      </div>
+    </div>
+  </div>
+
+  <footer style="background: linear-gradient(135deg, #d1c0e9 0%, #b7c9f5 100%); padding: 1rem 0; text-align: center; box-shadow: 0 2px 8px rgba(0,0,0,0.1); margin-top: 2rem; font-weight: 600; color: #2d2db6; font-size: 1rem;">
+    &copy; 2024 QuizzCrakerz. All rights reserved.
+  </footer>
+</body>
+</html>

@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>--Online Quiz Website--</title>
+
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+
+  <style>
+    body, html {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #d2b6f0 0%, #99b7eb 100%);
+      color: #222;
+    }
+    .navbar {
+      background: linear-gradient(135deg, #d1c0e9 0%, #b7c9f5 100%);
+      padding: 1rem 2rem;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+    .navbar-brand {
+      font-weight: 700;
+      font-size: 1.5rem;
+      color: #2d2db6;
+      letter-spacing: 2px;
+    }
+    .nav-link {
+      color: #171717;
+      font-weight: 600;
+      margin-right: 1rem;
+      cursor: pointer;
+      transition: color 0.3s ease;
+    }
+    .nav-link:hover, .nav-link.active {
+      color: #3a3aeb;
+    }
+    .hero {
+      display: flex;
+      height: calc(100vh - 72px);
+      padding: 0 2rem;
+      max-width: 1200px;
+      margin: 0 auto;
+      color: black;
+      text-align: left;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .hero .text-content {
+      max-width: 50%;
+      padding-left: 2rem;
+      transform: translateX(0);
+    }
+    .hero h1 {
+      font-size: 3.5rem;
+      font-weight: 900;
+      margin-top: 0%;
+      margin-bottom: 0.5rem;
+      color: #120c4b; /* unique bold color */
+      font-family: 'Segoe UI Black', 'Arial Black', Arial, sans-serif;
+    }
+    .hero h2 {
+      font-weight: 700;
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
+      color: black;
+    }
+    .hero p {
+      font-size: 1.2rem;
+      line-height: 1.6;
+      max-width: 600px;
+      text-align: justify;
+      margin-bottom: 2rem;
+      color: rgb(0, 0, 0);
+    }
+    .hero .btn-primary {
+      background: transparent;
+      border: 4px solid #3b0396;
+      color: #252154e8;
+      padding: 0.75rem 2rem;
+      font-size: 1.1rem;
+      font-weight: 700;
+      border-radius: 30px;
+      transition: background-color 0.3s ease, color 0.3s ease;
+      width: fit-content;
+    }
+    .hero .btn-primary:hover {
+      background-color: #103287;
+      color: white;
+      text-decoration: none;
+    }
+    .hero .image-content {
+      max-width: 45%;
+      padding-right: 2rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+    .hero .image-content img {
+      width: 120%;
+      height: auto;
+      border-radius: 15px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+      transform: translateY(-5%);
+    }
+    .hero .image-content a {
+      margin-top: 1rem;
+      width: fit-content;
+    }
+    /* Wave background shape */
+    .wave-bg {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 300px;
+      background: url('https://www.transparenttextures.com/patterns/waves.png') repeat-x;
+      background-size: cover;
+      opacity: 0.3;
+      z-index: -1;
+    }
+    @media (max-width: 768px) {
+      .hero {
+        flex-direction: column;
+        height: auto;
+        padding: 2rem 1rem;
+      }
+      .hero .text-content {
+        max-width: 100%;
+        transform: translateX(0);
+        padding: 0;
+        margin-bottom: 2rem;
+      }
+      .hero .image-content {
+        max-width: 100%;
+        padding: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+  <nav class="navbar d-flex align-items-center">
+    <div class="navbar-brand">Online Quiz Website</div>
+    <div class="ms-auto d-flex">
+      <a href="{{ url_for('frontpage') }}" class="nav-link active">Home</a>
+      <a href="{{ url_for('features') }}" class="nav-link">Features</a>
+      <a href="{{ url_for('about') }}" class="nav-link">About</a>
+      <a href="{{ url_for('service') }}" class="nav-link">Service</a>
+      <a href="{{ url_for('contact') }}" class="nav-link">Contact</a>
+      <a href="{{ url_for('our_teams') }}" class="nav-link">Our Team</a>
+    </div>
+  </nav>
+
+  <section class="hero">
+    <div class="text-content">
+      <h1>QUIZZCRAKERZ</h1>
+      <h2>Fuel Your Brain, Fire Your Game!</h2>
+      <p>
+        QuizzCrakerz is a cutting-edge online quiz platform designed to transform the way you learn and test your knowledge. Our platform offers a rich, interactive experience with a wide range of features tailored to learners, educators, and institutions.
+        <br><br>
+        With QuizzCrakerz, you can create custom quizzes, participate in challenging tests across multiple subjects, and track your progress with detailed analytics.
+        
+        <br>Join thousands of learners who are making education engaging and effective with QuizzCrakerz — where knowledge meets innovation.
+      </p>
+    </div>
+    <div class="image-content d-flex flex-column align-items-center">
+      <img src="{{ url_for('static', filename='logo.jpg') }}" alt="QUIZZCRAKERZ" style="margin-top: -5%;" />
+      <a href="{{ url_for('index') }}" class="btn btn-primary mt-3">Sign Up / Sign In</a>
+    </div>
+  </section>
+
+  <div class="wave-bg"></div>
+
+  <footer class="footer bg-gradient" style="background: linear-gradient(115deg, #d1c0e9 0%, #b7c9f5 100%); padding: 0.75rem 0; text-align: center">
+    <div class="container">
+      <p style="margin: 0; font-weight: 600; color: #2d2db6; font-size: 1.2rem;">&copy; 2024 QuizzCrakerz. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <!-- Bootstrap JS Bundle -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
