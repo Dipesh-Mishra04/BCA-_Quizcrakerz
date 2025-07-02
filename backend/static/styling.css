@@ -119,3 +119,54 @@ body {
   font-size: 1.1rem;
   border-radius: 6px;
 }
+
+@media (max-width: 768px) {
+  .quiz-container {
+    width: 100%;
+    height: auto;
+    margin: 20px 10px;
+    padding: 20px;
+  }
+  .timer-box {
+    position: static;
+    margin-bottom: 15px;
+    justify-content: center;
+  }
+  .question-text {
+    margin-top: 20px;
+    font-size: 1.3rem;
+  }
+  .option {
+    font-size: 1rem;
+    padding: 12px 15px;
+  }
+  #next-btn {
+    width: 100%;
+    padding: 12px 0;
+    font-size: 1.2rem;
+  }
+  .result-card {
+    padding: 20px;
+    margin: 10px;
+    max-width: 95% !important;
+  }
+  .result-title {
+    font-size: 1.8rem;
+  }
+  .score-badge {
+    font-size: 1.5rem;
+    padding: 0.75rem 1.5rem;
+  }
+  .rank-text {
+    font-size: 1rem;
+  }
+  .btn-group {
+    flex-direction: column;
+    gap: 10px;
+  }
+  .btn {
+    min-width: 100% !important;
+    font-size: 1rem;
+    padding: 12px 0;
+  }
+}
