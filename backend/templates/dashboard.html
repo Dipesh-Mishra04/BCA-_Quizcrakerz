@@ -204,7 +204,8 @@
 <body>
   <div class="d-flex justify-content-center min-vh-100 py-5">
     <div class="dashboard-card" style="max-width: 900px; width: 100%;">
-      <h1 class="text-center">WELCOME {{ session['user'] }}</h1>
+      {% set username = session['user'].split('@')[0] if session['user'] else '' %}
+      <h1 class="text-center">Welcome!  {{ username }}</h1>
       <p class="lead text-center">Follow the steps below to perform your BCA mock test:</p>
       <ol class="mb-4" style="max-width: 600px; margin: 0 auto;">
         <li>Hover over a subject to see the highlight effect.</li>
