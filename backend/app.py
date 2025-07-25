@@ -6,6 +6,11 @@ import os
 import random
 import requests
 
+# Import Flask-Dance for OAuth
+from flask_dance.contrib.facebook import make_facebook_blueprint, facebook
+from flask_dance.contrib.linkedin import make_linkedin_blueprint, linkedin
+from flask_dance.contrib.google import make_google_blueprint, google
+
 # Load configurations
 app = Flask(__name__)
 app.config.from_pyfile('config.py')
@@ -194,6 +199,70 @@ def our_teams():
 def logout():
     session.clear()
     return redirect(url_for('index'))
+
+# OAuth Blueprints for Facebook, LinkedIn, Google
+facebook_bp = make_facebook_blueprint(
+    client_id=app.config.get('FACEBOOK_OAUTH_CLIENT_ID', ''),
+    client_secret=app.config.get('FACEBOOK_OAUTH_CLIENT_SECRET', ''),
+    redirect_url='/auth/facebook/callback',
+    scope='email'
+)
+linkedin_bp = make_linkedin_blueprint(
+    client_id=app.config.get('LINKEDIN_OAUTH_CLIENT_ID', ''),
+    client_secret=app.config.get('LINKEDIN_OAUTH_CLIENT_SECRET', ''),
+    redirect_url='/auth/linkedin/callback',
+    scope='r_liteprofile r_emailaddress'
+)
+google_bp = make_google_blueprint(
+    client_id=app.config.get('GOOGLE_OAUTH_CLIENT_ID', ''),
+    client_secret=app.config.get('GOOGLE_OAUTH_CLIENT_SECRET', ''),
+    redirect_url='/auth/google/callback',
+    scope=['profile', 'email']
+)
+
+app.register_blueprint(facebook_bp, url_prefix='/auth/facebook')
+app.register_blueprint(linkedin_bp, url_prefix='/auth/linkedin')
+app.register_blueprint(google_bp, url_prefix='/auth/google')
+
+@app.route('/auth/facebook')
+def auth_facebook():
+    if not facebook.authorized:
+        return redirect(url_for('facebook.login'))
+    resp = facebook.get('/me?fields=id,name,email')
+    if not resp.ok:
+        return "Failed to fetch user info from Facebook.", 400
+    user_info = resp.json()
+    # Here you can handle user login or registration with user_info
+    session['user'] = user_info.get('email', user_info.get('name'))
+    session['user_id'] = user_info.get('id')
+    return redirect(url_for('dashboard'))
+
+@app.route('/auth/linkedin')
+def auth_linkedin():
+    if not linkedin.authorized:
+        return redirect(url_for('linkedin.login'))
+    resp = linkedin.get('v2/me')
+    email_resp = linkedin.get('v2/emailAddress?q=members&projection=(elements*(handle~))')
+    if not resp.ok or not email_resp.ok:
+        return "Failed to fetch user info from LinkedIn.", 400
+    user_info = resp.json()
+    email_info = email_resp.json()
+    email = email_info['elements'][0]['handle~']['emailAddress']
+    session['user'] = email
+    session['user_id'] = user_info.get('id')
+    return redirect(url_for('dashboard'))
+
+@app.route('/auth/google')
+def auth_google():
+    if not google.authorized:
+        return redirect(url_for('google.login'))
+    resp = google.get('/oauth2/v2/userinfo')
+    if not resp.ok:
+        return "Failed to fetch user info from Google.", 400
+    user_info = resp.json()
+    session['user'] = user_info.get('email')
+    session['user_id'] = user_info.get('id')
+    return redirect(url_for('dashboard'))
 
 if __name__ == "__main__":
     from os import environ
