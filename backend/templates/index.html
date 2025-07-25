@@ -135,133 +135,45 @@
     .btn-primary:hover {
       background: #4838d1;
     }
-    .divider {
-      display: flex;
-      align-items: center;
-      margin: 25px 0;
-      color: #999;
-      font-size: 0.9rem;
-    }
-    .divider::before,
-    .divider::after {
-      content: '';
-      flex: 1;
-      height: 1px;
-      background: #ddd;
-    }
-    .divider span {
-      margin: 0 15px;
-      font-weight: 500;
-    }
     .social-login {
-      margin-top: 20px;
-    }
-    .social-login-title {
+      margin-top: 30px;
       text-align: center;
-      color: #666;
+      color: #999;
       font-weight: 500;
       font-size: 0.9rem;
-      margin-bottom: 15px;
     }
-    .social-buttons {
+    .social-icons {
+      margin-top: 10px;
       display: flex;
-      flex-direction: column;
-      gap: 12px;
+      justify-content: center;
+      gap: 20px;
     }
-    .social-btn {
+    .social-icons button {
+      border: 1.5px solid #ccc;
+      background: white;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      cursor: pointer;
+      transition: border-color 0.3s ease;
       display: flex;
       align-items: center;
       justify-content: center;
-      width: 100%;
-      padding: 12px 20px;
-      border: 1.5px solid #ddd;
-      background: white;
-      border-radius: 8px;
-      text-decoration: none;
-      color: #333;
-      font-weight: 600;
-      font-size: 0.95rem;
-      transition: all 0.3s ease;
-      position: relative;
+      padding: 0;
     }
-    .social-btn:hover {
-      text-decoration: none;
-      color: #333;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-      transform: translateY(-1px);
+    .social-icons button:hover {
+      border-color: #5c4dff;
     }
-    .social-btn svg {
+    .social-icons svg {
       width: 20px;
       height: 20px;
-      margin-right: 12px;
-    }
-    .facebook-btn {
-      border-color: #1877f2;
-      color: #1877f2;
-    }
-    .facebook-btn:hover {
-      background: #1877f2;
-      color: white;
-    }
-    .facebook-btn svg {
-      fill: #1877f2;
-    }
-    .facebook-btn:hover svg {
-      fill: white;
-    }
-    .linkedin-btn {
-      border-color: #0077b5;
-      color: #0077b5;
-    }
-    .linkedin-btn:hover {
-      background: #0077b5;
-      color: white;
-    }
-    .linkedin-btn svg {
-      fill: #0077b5;
-    }
-    .linkedin-btn:hover svg {
-      fill: white;
-    }
-    .google-btn {
-      border-color: #db4437;
-      color: #db4437;
-    }
-    .google-btn:hover {
-      background: #db4437;
-      color: white;
-    }
-    .google-btn svg {
-      fill: #db4437;
-    }
-    .google-btn:hover svg {
-      fill: white;
+      fill: #666;
     }
     .error-message {
       color: #d9534f;
       margin-bottom: 15px;
       font-weight: 600;
       text-align: center;
-    }
-    .loading {
-      opacity: 0.7;
-      pointer-events: none;
-    }
-    .loading::after {
-      content: '';
-      position: absolute;
-      width: 16px;
-      height: 16px;
-      margin: auto;
-      border: 2px solid transparent;
-      border-top-color: currentColor;
-      border-radius: 50%;
-      animation: spin 1s linear infinite;
-      right: 15px;
-    }
-    @keyframes spin {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
     }
     @media (max-width: 768px) {
       .container-fluid {
@@ -309,33 +221,14 @@
     function toggleForm(formType) {
       const loginForm = document.getElementById('loginForm');
       const signupForm = document.getElementById('signupForm');
-      const toggleText = document.getElementById('toggleText');
-      const toggleBtn = document.getElementById('toggleBtn');
-      
       if (formType === 'login') {
         loginForm.style.display = 'block';
         signupForm.style.display = 'none';
-        toggleText.textContent = "Don't have an account?";
-        toggleBtn.textContent = 'Sign Up';
       } else {
         loginForm.style.display = 'none';
         signupForm.style.display = 'block';
-        toggleText.textContent = "Already have an account?";
-        toggleBtn.textContent = 'Login';
       }
     }
-
-    function handleSocialLogin(provider) {
-      const button = event.target.closest('.social-btn');
-      button.classList.add('loading');
-      
-      // Simulate API call delay
-      setTimeout(() => {
-        // In a real application, you would redirect to the OAuth provider
-        window.location.href = `/auth/${provider}`;
-      }, 500);
-    }
-
     window.onload = function() {
       toggleForm('login');
     };
@@ -355,9 +248,9 @@
         </div>
 
         <!-- Error Message -->
-        <!-- {% if error %}
+        {% if error %}
           <div class="error-message">{{ error }}</div>
-        {% endif %} -->
+        {% endif %}
 
         <!-- Login Form -->
         <form id="loginForm" method="POST" style="display:none;">
@@ -373,43 +266,16 @@
             <input type="password" id="loginPassword" name="password" required />
           </div>
           <button type="submit" class="btn btn-primary">Login</button>
-          
-          <div class="divider">
-            <span>or continue with</span>
-          </div>
-          
-          <div class="social-login">
-            <div class="social-buttons">
-              <a href="#" class="social-btn facebook-btn" onclick="handleSocialLogin('facebook')" title="Continue with Facebook">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                  <path d="M22.675 0h-21.35C.6 0 0 .6 0 1.325v21.351C0 23.4.6 24 1.325 24H12.82v-9.294H9.692v-3.622h3.128V8.413c0-3.1 1.894-4.788 4.659-4.788 1.325 0 2.466.099 2.797.143v3.24l-1.918.001c-1.504 0-1.796.715-1.796 1.763v2.312h3.59l-.467 3.622h-3.123V24h6.116C23.4 24 24 23.4 24 22.675V1.325C24 .6 23.4 0 22.675 0z"/>
-                </svg>
-                Continue with Facebook
-              </a>
-              <a href="#" class="social-btn linkedin-btn" onclick="handleSocialLogin('linkedin')" title="Continue with LinkedIn">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                  <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.025-3.039-1.852-3.039-1.853 0-2.136 1.445-2.136 2.939v5.669H9.354V9h3.414v1.561h.049c.476-.9 1.637-1.852 3.37-1.852 3.602 0 4.268 2.37 4.268 5.455v6.288zM5.337 7.433c-1.144 0-2.07-.927-2.07-2.07 0-1.144.926-2.07 2.07-2.07 1.144 0 2.07.926 2.07 2.07 0 1.143-.926 2.07-2.07 2.07zm1.777 13.019H3.56V9h3.554v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.226.792 24 1.771 24h20.451C23.2 24 24 23.226 24 22.271V1.729C24 .774 23.2 0 22.225 0z"/>
-                </svg>
-                Continue with LinkedIn
-              </a>
-              <a href="#" class="social-btn google-btn" onclick="handleSocialLogin('google')" title="Continue with Google">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                  <path d="M21.805 10.023h-9.82v3.954h5.64c-.243 1.44-1.68 4.23-5.64 4.23-3.4 0-6.17-2.82-6.17-6.3s2.77-6.3 6.17-6.3c1.93 0 3.22.82 3.97 1.52l2.7-2.6c-1.58-1.48-3.6-2.4-6.67-2.4-5.43 0-9.83 4.4-9.83 9.8s4.4 9.8 9.83 9.8c5.68 0 9.45-3.98 9.45-9.6 0-.64-.07-1.12-.15-1.4z"/>
-                </svg>
-                Continue with Google
-              </a>
-            </div>
-          </div>
         </form>
 
         <!-- Signup Form -->
         <form id="signupForm" method="POST" style="display:none;">
           <input type="hidden" name="action" value="signup" />
-          <h2>Welcome to QuizzCrakerz!</h2>
-          <p class="subtitle">Create your account</p>
+          <h2>Welcome to Focus!</h2>
+          <p class="subtitle">Register your account</p>
           <div class="form-group">
             <label for="signupName">Name</label>
-            <input type="text" id="signupName" name="name" required />
+            <input type="text" id="signupName" name="name" />
           </div>
           <div class="form-group">
             <label for="signupEmail">Email</label>
@@ -419,36 +285,10 @@
             <label for="signupPassword">Password</label>
             <input type="password" id="signupPassword" name="password" required placeholder="8+ characters" />
           </div>
-          <button type="submit" class="btn btn-primary">Create Account</button>
-
-          <div class="divider">
-            <span>or sign up with</span>
-          </div>
-
-          <div class="social-login">
-            <div class="social-buttons">
-              <a href="#" class="social-btn facebook-btn" onclick="handleSocialLogin('facebook')" title="Sign up with Facebook">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                  <path d="M22.675 0h-21.35C.6 0 0 .6 0 1.325v21.351C0 23.4.6 24 1.325 24H12.82v-9.294H9.692v-3.622h3.128V8.413c0-3.1 1.894-4.788 4.659-4.788 1.325 0 2.466.099 2.797.143v3.24l-1.918.001c-1.504 0-1.796.715-1.796 1.763v2.312h3.59l-.467 3.622h-3.123V24h6.116C23.4 24 24 23.4 24 22.675V1.325C24 .6 23.4 0 22.675 0z"/>
-                </svg>
-                Sign up with Facebook
-              </a>
-              <a href="#" class="social-btn linkedin-btn" onclick="handleSocialLogin('linkedin')" title="Sign up with LinkedIn">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                  <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.025-3.039-1.852-3.039-1.853 0-2.136 1.445-2.136 2.939v5.669H9.354V9h3.414v1.561h.049c.476-.9 1.637-1.852 3.37-1.852 3.602 0 4.268 2.37 4.268 5.455v6.288zM5.337 7.433c-1.144 0-2.07-.927-2.07-2.07 0-1.144.926-2.07 2.07-2.07 1.144 0 2.07.926 2.07 2.07 0 1.143-.926 2.07-2.07 2.07zm1.777 13.019H3.56V9h3.554v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.226.792 24 1.771 24h20.451C23.2 24 24 23.226 24 22.271V1.729C24 .774 23.2 0 22.225 0z"/>
-                </svg>
-                Sign up with LinkedIn
-              </a>
-              <a href="#" class="social-btn google-btn" onclick="handleSocialLogin('google')" title="Sign up with Google">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                  <path d="M21.805 10.023h-9.82v3.954h5.64c-.243 1.44-1.68 4.23-5.64 4.23-3.4 0-6.17-2.82-6.17-6.3s2.77-6.3 6.17-6.3c1.93 0 3.22.82 3.97 1.52l2.7-2.6c-1.58-1.48-3.6-2.4-6.67-2.4-5.43 0-9.83 4.4-9.83 9.8s4.4 9.8 9.83 9.8c5.68 0 9.45-3.98 9.45-9.6 0-.64-.07-1.12-.15-1.4z"/>
-                </svg>
-                Sign up with Google
-              </a>
-            </div>
-          </div>
+          <button type="submit" class="btn btn-primary">Sign Up</button>
         </form>
-      </div>
+
+    </div>
     </div>
   </div>
 
